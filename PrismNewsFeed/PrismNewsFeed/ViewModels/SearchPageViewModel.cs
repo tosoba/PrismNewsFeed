@@ -1,17 +1,48 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using PrismNewsFeed.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PrismNewsFeed.Models;
+using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace PrismNewsFeed.ViewModels
 {
-	public class SearchPageViewModel : ViewModelBase
-	{
-        public SearchPageViewModel(INavigationService navigationService) : base(navigationService)
+    public class SearchPageViewModel : HeadlinesViewModelBase
+    {
+        public SearchPageViewModel(INavigationService navigationService, IHeadlinesService headlinesService) : base(navigationService, headlinesService)
         {
             Title = "Search";
+            IsLoading = false;
+            Headlines = new List<Headline>();
         }
-	}
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set { SetProperty(ref _searchText, value); }
+        }
+
+        private ICommand _searchCommand;
+        public ICommand SearchCommand
+        {
+            get
+            {
+                return _searchCommand ?? (_searchCommand = new Command<string>((query) =>
+                {
+                    if (SearchText.Any()) SearchForHeadlines(query);
+                }));
+            }
+        }
+
+        private async void SearchForHeadlines(string query)
+        {
+            IsLoading = true;
+            Headlines = await _headlinesService.SearchHeadlines(query);
+        }
+    }
 }

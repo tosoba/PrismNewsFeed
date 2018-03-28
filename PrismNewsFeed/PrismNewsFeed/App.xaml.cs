@@ -27,10 +27,10 @@ namespace PrismNewsFeed
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<FeedsPage>();
-            containerRegistry.RegisterForNavigation<TopHeadlinesPage>();
-            containerRegistry.RegisterForNavigation<SearchPage>();
+            containerRegistry.RegisterForNavigation<TopHeadlinesPage, TopHeadlinesPageViewModel>();
+            containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
 
-            containerRegistry.RegisterInstance<ITopHeadlinesService>(new TopHeadlinesService());
+            containerRegistry.RegisterInstance<IHeadlinesService>(new HeadlinesService());
         }
     }
 }

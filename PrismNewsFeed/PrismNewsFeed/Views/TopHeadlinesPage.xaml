@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:converters="clr-namespace:PrismNewsFeed.Converters"
+             xmlns:controls="clr-namespace:PrismNewsFeed.Views.Controls"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              prism:ViewModelLocator.AutowireViewModel="True"
@@ -10,42 +11,14 @@
              x:Class="PrismNewsFeed.Views.TopHeadlinesPage">
 
     <StackLayout Orientation="Vertical">
-        <ListView ItemsSource="{Binding TopHeadlines}" IsVisible="{Binding IsLoading, Converter={converters:InverseBoolConverter}}" CachingStrategy="RecycleElement"
-                  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HasUnevenRows="True" SeparatorVisibility="None">
+        <ListView ItemsSource="{Binding Headlines}" IsVisible="{Binding IsLoading, Converter={converters:InverseBoolConverter}}" 
+                  CachingStrategy="RecycleElement" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                  HasUnevenRows="True" SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <ffimageloading:CachedImage HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Source="{Binding ImageUrl}" 
-                                                            TransformPlaceholders="True" LoadingPlaceholder="placeholder.jpg" ErrorPlaceholder="placeholder.jpg" 
-                                                            DownsampleToViewSize="true" HeightRequest="200" Grid.ColumnSpan="2" Aspect="Fill"/>
-                                
-                                <StackLayout Grid.ColumnSpan="2" BackgroundColor="#B3000000" VerticalOptions="End" HorizontalOptions="Fill" Padding="10,5,10,5">
-                                    <Label Text="{Binding Title}" TextColor="White"/>
-                                </StackLayout>
-
-                                <Label Text="{Binding AuthorSource, Converter={converters:EmptyOrNullStringConverter}, ConverterParameter='Unknown source'}" 
-                                       Grid.Row="1" HorizontalOptions="Fill" Margin="5,5,5,5" FontSize="Medium" FontAttributes="Bold" VerticalTextAlignment="Center"/>
-                                <Label Text="{Binding PublishedFormatted}" Grid.Row="1" Grid.Column="1" HorizontalOptions="Fill" Margin="5,5,5,5" FontSize="Default"
-                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                                <Label Text="{Binding Description}" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Fill" Margin="5,5,5,5" FontSize="Default"/>
-
-                                <BoxView Color="#2196F3" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="5" Grid.Row="3" Grid.ColumnSpan="2"/>
-                            </Grid>
-                        </StackLayout>
-                    </ViewCell>
+                    <controls:HeadlineListCell ImageUrl="{Binding ImageUrl}" Title="{Binding Title}" 
+                                               PublishedFormatted="{Binding PublishedFormatted}" AuthorSource="{Binding AuthorSource}" 
+                                               Description="{Binding Description}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

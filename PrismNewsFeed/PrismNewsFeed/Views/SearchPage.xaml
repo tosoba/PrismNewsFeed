@@ -2,8 +2,29 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:PrismNewsFeed.Views.Controls"
+             xmlns:converters="clr-namespace:PrismNewsFeed.Converters"
              prism:ViewModelLocator.AutowireViewModel="True"
              Title="{Binding Title}"
              x:Class="PrismNewsFeed.Views.SearchPage">
+
+    <StackLayout Orientation="Vertical">
+        <SearchBar x:Name="SearchBar" Placeholder="Enter topic" Text="{Binding SearchText}"
+                   SearchCommand="{Binding SearchCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"/>
+
+        <ListView ItemsSource="{Binding Headlines}" IsVisible="{Binding IsLoading, Converter={converters:InverseBoolConverter}}"
+                  CachingStrategy="RecycleElement" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                  HasUnevenRows="True" SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <controls:HeadlineListCell ImageUrl="{Binding ImageUrl}" Title="{Binding Title}" 
+                                               PublishedFormatted="{Binding PublishedFormatted}" AuthorSource="{Binding AuthorSource}" 
+                                               Description="{Binding Description}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ActivityIndicator IsRunning="True" IsVisible="{Binding IsLoading}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+    </StackLayout>
   
 </ContentPage>
