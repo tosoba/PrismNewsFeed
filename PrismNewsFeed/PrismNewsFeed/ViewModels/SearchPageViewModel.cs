@@ -20,13 +20,6 @@ namespace PrismNewsFeed.ViewModels
             Headlines = new List<Headline>();
         }
 
-        private string _searchText;
-        public string SearchText
-        {
-            get { return _searchText; }
-            set { SetProperty(ref _searchText, value); }
-        }
-
         private ICommand _searchCommand;
         public ICommand SearchCommand
         {
@@ -34,7 +27,7 @@ namespace PrismNewsFeed.ViewModels
             {
                 return _searchCommand ?? (_searchCommand = new Command<string>((query) =>
                 {
-                    if (SearchText.Any()) SearchForHeadlines(query);
+                    if (query.Any()) SearchForHeadlines(query);
                 }));
             }
         }

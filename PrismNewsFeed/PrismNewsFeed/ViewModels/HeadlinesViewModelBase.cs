@@ -1,11 +1,8 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
 using PrismNewsFeed.Models;
 using PrismNewsFeed.Services;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PrismNewsFeed.ViewModels
 {
@@ -35,5 +32,28 @@ namespace PrismNewsFeed.ViewModels
             get { return _isLoading; }
             set { SetProperty(ref _isLoading, value); }
         }
+
+        private Headline _selectedHeadline;
+        public Headline SelectedItem
+        {
+            get
+            {
+                return _selectedHeadline;
+            }
+            set
+            {
+                SetProperty(ref _selectedHeadline, value);
+                NavigateToNewsPageCommand.Execute();
+            }
+        }
+
+        public DelegateCommand NavigateToNewsPageCommand => new DelegateCommand(NavigateToNewsPage);
+
+        private async void NavigateToNewsPage()
+        {
+            var parameters = new NavigationParameters();
+            parameters.Add(Constants.Constants.urlParameterKey, SelectedItem.Url);
+            await NavigationService.NavigateAsync("NewsBrowserPage", parameters);
+        } 
     }
 }
