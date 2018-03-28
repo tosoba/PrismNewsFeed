@@ -17,7 +17,18 @@ namespace PrismNewsFeed.ViewModels
         public List<Headline> TopHeadlines
         {
             get { return _topHeadlines; }
-            set { SetProperty(ref _topHeadlines, value); }
+            set
+            {
+                SetProperty(ref _topHeadlines, value);
+                IsLoading = false;
+            }
+        }
+
+        private bool _isLoading = true;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { SetProperty(ref _isLoading, value); }
         }
 
         public TopHeadlinesPageViewModel(INavigationService navigationService, ITopHeadlinesService topHeadlinesService) : base(navigationService)

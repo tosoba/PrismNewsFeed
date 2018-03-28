@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace PrismNewsFeed.Models
 {
@@ -20,9 +21,25 @@ namespace PrismNewsFeed.Models
         public string Url { get; set; }
 
         [JsonProperty("urlToImage")]
-        public string UrlToImage { get; set; }
+        public string ImageUrl { get; set; }
 
         [JsonProperty("publishedAt")]
         public string PublishedAt { get; set; }
+
+        [JsonIgnore]
+        public string PublishedFormatted {
+            get => Regex.Replace(PublishedAt, "[A-Za-z ]", " ");
+        }
+
+        [JsonIgnore]
+        public string AuthorSource
+        {
+            get
+            {
+                if (Author != null && Author != string.Empty && Source != null && Author != string.Empty) return $"{Author}, {Source.Name}";
+                else if (Author != null && Author != string.Empty) return Author;
+                else return Source.Name;
+            }
+        }
     }
 }
