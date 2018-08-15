@@ -7,7 +7,11 @@
              Title="{Binding Title}">
 
     <StackLayout Orientation="Vertical">
-        <WebView Source="{Binding Url}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+        <ActivityIndicator x:Name="webViewLoadingIndicator" IsRunning="True" IsVisible="True" 
+                           HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        <WebView x:Name="newsWebView" Source="{Binding Url}" IsVisible="False"
+                 HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                 Navigated="newsWebView_onNavigated" Navigating="newsWebView_onNavigating"/>
     </StackLayout>
     
 </ContentPage>

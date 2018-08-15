@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 
 namespace PrismNewsFeed.Services
 {
-    public interface IHeadlinesService
+    public interface INewsService
     {
-        Task<List<Headline>> LoadTopHeadlines(string countryCode = "us");
+        Task<List<Headline>> LoadTopHeadlines(string source = null);
         Task<List<Headline>> SearchHeadlines(string query);
+
+        Task<List<Source>> LoadSources();
     }
 }

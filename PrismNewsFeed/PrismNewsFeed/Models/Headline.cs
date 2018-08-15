@@ -6,7 +6,7 @@ namespace PrismNewsFeed.Models
     public class Headline
     {
         [JsonProperty("source")]
-        public Source Source { get; set; }
+        public SimpleSource Source { get; set; }
 
         [JsonProperty("author")]
         public string Author { get; set; }

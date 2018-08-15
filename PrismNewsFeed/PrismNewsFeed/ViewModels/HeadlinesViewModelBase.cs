@@ -6,19 +6,16 @@ using System.Collections.Generic;
 
 namespace PrismNewsFeed.ViewModels
 {
-    public class HeadlinesViewModelBase : ViewModelBase
+    public class HeadlinesViewModelBase : NewsServiceViewModelBase
     {
-        protected IHeadlinesService _headlinesService;
-
-        public HeadlinesViewModelBase(INavigationService navigationService, IHeadlinesService headlinesService) : base(navigationService)
+        public HeadlinesViewModelBase(INavigationService navigationService, INewsService newsService) : base(navigationService, newsService)
         {
-            _headlinesService = headlinesService;
         }
 
         private List<Headline> _headlines;
         public List<Headline> Headlines
         {
-            get { return _headlines; }
+            get => _headlines;
             set
             {
                 SetProperty(ref _headlines, value);
@@ -26,20 +23,10 @@ namespace PrismNewsFeed.ViewModels
             }
         }
 
-        private bool _isLoading;
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set { SetProperty(ref _isLoading, value); }
-        }
-
         private Headline _selectedHeadline;
         public Headline SelectedItem
         {
-            get
-            {
-                return _selectedHeadline;
-            }
+            get => _selectedHeadline;
             set
             {
                 SetProperty(ref _selectedHeadline, value);
@@ -52,8 +39,8 @@ namespace PrismNewsFeed.ViewModels
         private async void NavigateToNewsPage()
         {
             var parameters = new NavigationParameters();
-            parameters.Add(Constants.Constants.urlParameterKey, SelectedItem.Url);
+            parameters.Add(Constants.NavigationKeys.headline, SelectedItem);
             await NavigationService.NavigateAsync("NewsBrowserPage", parameters);
-        } 
+        }
     }
 }

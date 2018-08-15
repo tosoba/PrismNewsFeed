@@ -1,23 +1,31 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Navigation;
+﻿using Prism.Navigation;
+using PrismNewsFeed.Constants;
 using PrismNewsFeed.Models;
 using PrismNewsFeed.Services;
 
 namespace PrismNewsFeed.ViewModels
 {
-	public class TopHeadlinesPageViewModel : HeadlinesViewModelBase
+    public class TopHeadlinesPageViewModel : HeadlinesViewModelBase
 	{
-        public TopHeadlinesPageViewModel(INavigationService navigationService, IHeadlinesService headlinesService) : base(navigationService, headlinesService)
+        public TopHeadlinesPageViewModel(INavigationService navigationService, INewsService headlinesService) : base(navigationService, headlinesService)
         {
             Title = "Top headlines";
-            IsLoading = true;
         }
 
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
             base.OnNavigatingTo(parameters);
-            Headlines = await _headlinesService.LoadTopHeadlines();
+
+            if (!parameters.ContainsKey(NavigationKeys.headlinesSource))
+            {
+                Headlines = await _newsService.LoadTopHeadlines();
+            }
+            else
+            {
+                var source = (Source)parameters[NavigationKeys.headlinesSource];
+                Title = source.Name;
+                Headlines = await _newsService.LoadTopHeadlines(source.Id);
+            }
         }
     }
 }

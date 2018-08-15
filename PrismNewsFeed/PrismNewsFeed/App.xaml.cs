@@ -30,8 +30,9 @@ namespace PrismNewsFeed
             containerRegistry.RegisterForNavigation<TopHeadlinesPage>();
             containerRegistry.RegisterForNavigation<SearchPage>();
             containerRegistry.RegisterForNavigation<NewsBrowserPage>();
+            containerRegistry.RegisterForNavigation<SourcesPage>();
 
-            containerRegistry.RegisterInstance<IHeadlinesService>(new HeadlinesService());
+            containerRegistry.RegisterInstance<INewsService>(new NewsService());
         }
     }
 }

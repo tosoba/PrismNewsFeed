@@ -1,13 +1,8 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Prism.Navigation;
 
 namespace PrismNewsFeed.ViewModels
 {
-	public class FeedsPageViewModel : ViewModelBase
+    public class FeedsPageViewModel : ViewModelBase
     {
         public FeedsPageViewModel(INavigationService navigationService): base(navigationService)
         {

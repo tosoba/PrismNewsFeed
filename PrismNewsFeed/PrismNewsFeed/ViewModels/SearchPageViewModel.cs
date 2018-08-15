@@ -13,7 +13,7 @@ namespace PrismNewsFeed.ViewModels
 {
     public class SearchPageViewModel : HeadlinesViewModelBase
     {
-        public SearchPageViewModel(INavigationService navigationService, IHeadlinesService headlinesService) : base(navigationService, headlinesService)
+        public SearchPageViewModel(INavigationService navigationService, INewsService headlinesService) : base(navigationService, headlinesService)
         {
             Title = "Search";
             IsLoading = false;
@@ -35,7 +35,7 @@ namespace PrismNewsFeed.ViewModels
         private async void SearchForHeadlines(string query)
         {
             IsLoading = true;
-            Headlines = await _headlinesService.SearchHeadlines(query);
+            Headlines = await _newsService.SearchHeadlines(query);
         }
     }
 }

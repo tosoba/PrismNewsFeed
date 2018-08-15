@@ -10,6 +10,7 @@
     <TabbedPage.Children>
         <local:TopHeadlinesPage />
         <local:SearchPage />
+        <local:SourcesPage />
     </TabbedPage.Children>
   
 </TabbedPage>
