@@ -4,6 +4,9 @@ using PrismNewsFeed.Models;
 using PrismNewsFeed.Services;
 using Prism.Commands;
 using PrismNewsFeed.Constants;
+using System.Threading.Tasks;
+using Plugin.Connectivity;
+using System.Linq;
 
 namespace PrismNewsFeed.ViewModels
 {
@@ -51,6 +54,22 @@ namespace PrismNewsFeed.ViewModels
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
             base.OnNavigatingTo(parameters);
+
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                await LoadData();
+            }
+            else
+            {
+                ConnectionLost = true;
+                ShowNoConnectionDialog();
+            }
+        }
+
+        public override bool IsDataLoaded => Sources?.Any() ?? false;
+
+        public override async Task LoadData()
+        {
             Sources = await _newsService.LoadSources();
         }
     }

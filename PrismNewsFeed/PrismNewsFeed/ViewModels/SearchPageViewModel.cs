@@ -8,6 +8,8 @@ using System.Linq;
 using PrismNewsFeed.Models;
 using Xamarin.Forms;
 using System.Windows.Input;
+using System.Threading.Tasks;
+using Plugin.Connectivity;
 
 namespace PrismNewsFeed.ViewModels
 {
@@ -25,17 +27,39 @@ namespace PrismNewsFeed.ViewModels
         {
             get
             {
-                return _searchCommand ?? (_searchCommand = new Command<string>((query) =>
+                return _searchCommand ?? (_searchCommand = new Command<string>(async (query) =>
                 {
-                    if (query.Any()) SearchForHeadlines(query);
+                    if (query.Any())
+                    {
+                        lastQuery = query;
+                        if (CrossConnectivity.Current.IsConnected)
+                        {
+                            await LoadData();
+                        }
+                        else
+                        {
+                            ConnectionLost = true;
+                            ShowNoConnectionDialog();
+                        }
+                    }
                 }));
             }
         }
 
-        private async void SearchForHeadlines(string query)
+        private string lastQuery;
+
+        private async Task SearchForHeadlines(string query)
         {
             IsLoading = true;
             Headlines = await _newsService.SearchHeadlines(query);
+        }
+
+        public override async Task LoadData()
+        {
+            if (lastQuery != null)
+            {
+                await SearchForHeadlines(lastQuery);
+            }
         }
     }
 }

@@ -21,9 +21,9 @@
                 </Grid.ColumnDefinitions>
 
                 <ffimageloading:CachedImage HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Source="{Binding ImageUrl}" 
-                                            TransformPlaceholders="True" LoadingPlaceholder="placeholder.jpg" ErrorPlaceholder="placeholder.jpg" 
+                                            TransformPlaceholders="True" LoadingPlaceholder="placeholder.png" ErrorPlaceholder="placeholder.png" 
                                             DownsampleToViewSize="true" HeightRequest="200" Grid.ColumnSpan="2" Aspect="AspectFit"
-                                            BackgroundColor="Black"/>
+                                            BackgroundColor="Black" CacheType="All"/>
 
                 <StackLayout Grid.ColumnSpan="2" BackgroundColor="#B3000000" VerticalOptions="End" HorizontalOptions="Fill" Padding="10,5,10,5">
                     <Label Text="{Binding Title}" TextColor="White"/>

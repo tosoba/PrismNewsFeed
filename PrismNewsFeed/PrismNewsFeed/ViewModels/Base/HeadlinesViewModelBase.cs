@@ -3,10 +3,11 @@ using Prism.Navigation;
 using PrismNewsFeed.Models;
 using PrismNewsFeed.Services;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PrismNewsFeed.ViewModels
 {
-    public class HeadlinesViewModelBase : NewsServiceViewModelBase
+    public abstract class HeadlinesViewModelBase : NewsServiceViewModelBase
     {
         public HeadlinesViewModelBase(INavigationService navigationService, INewsService newsService) : base(navigationService, newsService)
         {
@@ -42,5 +43,7 @@ namespace PrismNewsFeed.ViewModels
             parameters.Add(Constants.NavigationKeys.headline, SelectedItem);
             await NavigationService.NavigateAsync("NewsBrowserPage", parameters);
         }
+
+        public override bool IsDataLoaded => Headlines?.Any() ?? false;
     }
 }
