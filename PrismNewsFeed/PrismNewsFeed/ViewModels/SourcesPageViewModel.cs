@@ -62,7 +62,6 @@ namespace PrismNewsFeed.ViewModels
             else
             {
                 ConnectionLost = true;
-                ShowNoConnectionDialog();
             }
         }
 
@@ -70,6 +69,7 @@ namespace PrismNewsFeed.ViewModels
 
         public override async Task LoadData()
         {
+            await base.LoadData();
             Sources = await _newsService.LoadSources();
         }
     }

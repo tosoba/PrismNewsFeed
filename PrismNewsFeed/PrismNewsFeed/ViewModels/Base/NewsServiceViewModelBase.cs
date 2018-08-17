@@ -1,22 +1,17 @@
-﻿using Acr.UserDialogs;
-using Plugin.Connectivity;
+﻿using Plugin.Connectivity;
 using Prism.Navigation;
 using PrismNewsFeed.Services;
-using System;
 using System.Threading.Tasks;
 
 namespace PrismNewsFeed.ViewModels
 {
     public abstract class NewsServiceViewModelBase : LoadingViewModelBase
     {
-        private static readonly string noConnectionMessage = "No internet connection.";
-
         protected INewsService _newsService;
 
         public NewsServiceViewModelBase(INavigationService navigationService, INewsService newsService) : base(navigationService)
         {
             _newsService = newsService;
-            IsLoading = true;
 
             CrossConnectivity.Current.ConnectivityChanged += async (sender, args) =>
             {
@@ -25,20 +20,32 @@ namespace PrismNewsFeed.ViewModels
                     ConnectionLost = false;
                     await LoadData();
                 }
+                else if (!args.IsConnected && !ConnectionLost)
+                {
+                    ConnectionLost = true;
+                }
+                else if (args.IsConnected && ConnectionLost)
+                {
+                    ConnectionLost = false;
+                }
             };
         }
 
-        public abstract Task LoadData();
+        public virtual async Task LoadData()
+        {
+            IsLoading = true;
+            return;
+        }
 
         public abstract bool IsDataLoaded { get; }
 
-        public bool ConnectionLost { get; set; } = false;
-
-        protected void ShowNoConnectionDialog()
+        private bool _connectionLost = false;
+        public bool ConnectionLost
         {
-            UserDialogs.Instance.Toast(new ToastConfig(noConnectionMessage)
-                        .SetDuration(TimeSpan.FromSeconds(2))
-                        .SetPosition(ToastPosition.Bottom));
+            get => _connectionLost;
+            set => SetProperty(ref _connectionLost, value);
         }
+
+        public string NoConnectionMessage => "No internet connection.";
     }
 }

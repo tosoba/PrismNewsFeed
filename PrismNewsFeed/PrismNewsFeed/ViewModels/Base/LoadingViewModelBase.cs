@@ -7,8 +7,8 @@ namespace PrismNewsFeed.ViewModels
         private bool _isLoading;
         public bool IsLoading
         {
-            get { return _isLoading; }
-            set { SetProperty(ref _isLoading, value); }
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value); 
         }
 
         public LoadingViewModelBase(INavigationService navigationService) : base(navigationService)

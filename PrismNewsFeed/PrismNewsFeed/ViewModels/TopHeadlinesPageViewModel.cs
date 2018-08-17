@@ -28,7 +28,6 @@ namespace PrismNewsFeed.ViewModels
             else
             {
                 ConnectionLost = true;
-                ShowNoConnectionDialog();
             }
         }
 
@@ -36,6 +35,7 @@ namespace PrismNewsFeed.ViewModels
         {
             if (_receivedOnNavigatingParameters != null)
             {
+                await base.LoadData();
                 if (!_receivedOnNavigatingParameters.ContainsKey(NavigationKeys.headlinesSource))
                 {
                     Headlines = await _newsService.LoadTopHeadlines();
@@ -46,6 +46,7 @@ namespace PrismNewsFeed.ViewModels
                     Title = source.Name;
                     Headlines = await _newsService.LoadTopHeadlines(source.Id);
                 }
+                // else if contains query
             }
         }
     }

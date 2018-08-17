@@ -1,7 +1,10 @@
-﻿using Prism.Commands;
+﻿using Acr.UserDialogs;
+using Plugin.Connectivity;
+using Prism.Commands;
 using Prism.Navigation;
 using PrismNewsFeed.Models;
 using PrismNewsFeed.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -39,9 +42,23 @@ namespace PrismNewsFeed.ViewModels
 
         private async void NavigateToNewsPage()
         {
-            var parameters = new NavigationParameters();
-            parameters.Add(Constants.NavigationKeys.headline, SelectedItem);
-            await NavigationService.NavigateAsync("NewsBrowserPage", parameters);
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                var parameters = new NavigationParameters();
+                parameters.Add(Constants.NavigationKeys.headline, SelectedItem);
+                await NavigationService.NavigateAsync("NewsBrowserPage", parameters);
+            }
+            else
+            {
+                ShowNoConnectionDialog();
+            }
+        }
+
+        private void ShowNoConnectionDialog()
+        {
+            UserDialogs.Instance.Toast(new ToastConfig(NoConnectionMessage)
+                        .SetDuration(TimeSpan.FromSeconds(2))
+                        .SetPosition(ToastPosition.Bottom));
         }
 
         public override bool IsDataLoaded => Headlines?.Any() ?? false;

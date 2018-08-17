@@ -11,6 +11,10 @@
              x:Class="PrismNewsFeed.Views.TopHeadlinesPage">
 
     <StackLayout Orientation="Vertical">
+        <Label Text="{Binding NoConnectionMessage}" IsVisible="{Binding ConnectionLost}" 
+               HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+               FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
         <ListView ItemsSource="{Binding Headlines}" IsVisible="{Binding IsLoading, Converter={converters:InverseBoolConverter}}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   CachingStrategy="RecycleElement" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 

@@ -39,7 +39,6 @@ namespace PrismNewsFeed.ViewModels
                         else
                         {
                             ConnectionLost = true;
-                            ShowNoConnectionDialog();
                         }
                     }
                 }));
@@ -50,7 +49,6 @@ namespace PrismNewsFeed.ViewModels
 
         private async Task SearchForHeadlines(string query)
         {
-            IsLoading = true;
             Headlines = await _newsService.SearchHeadlines(query);
         }
 
@@ -58,6 +56,7 @@ namespace PrismNewsFeed.ViewModels
         {
             if (lastQuery != null)
             {
+                await base.LoadData();
                 await SearchForHeadlines(lastQuery);
             }
         }

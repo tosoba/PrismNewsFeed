@@ -9,6 +9,10 @@
              x:Class="PrismNewsFeed.Views.SearchPage">
 
     <StackLayout Orientation="Vertical">
+        <Label Text="{Binding NoConnectionMessage}" IsVisible="{Binding ConnectionLost}" 
+               HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+               FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+        
         <SearchBar x:Name="SearchBar" Placeholder="Enter topic"
                    SearchCommand="{Binding SearchCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"/>
 

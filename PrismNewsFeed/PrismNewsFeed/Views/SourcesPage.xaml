@@ -10,6 +10,10 @@
              Title="{Binding Title}"
              x:Class="PrismNewsFeed.Views.SourcesPage">
     <StackLayout>
+        <Label Text="{Binding NoConnectionMessage}" IsVisible="{Binding ConnectionLost}" 
+               HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+               FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
         <ListView ItemsSource="{Binding Sources}" IsVisible="{Binding IsLoading, Converter={converters:InverseBoolConverter}}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   CachingStrategy="RetainElement" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
