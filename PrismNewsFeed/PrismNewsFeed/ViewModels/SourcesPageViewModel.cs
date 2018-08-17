@@ -7,6 +7,8 @@ using PrismNewsFeed.Constants;
 using System.Threading.Tasks;
 using Plugin.Connectivity;
 using System.Linq;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace PrismNewsFeed.ViewModels
 {
@@ -19,6 +21,7 @@ namespace PrismNewsFeed.ViewModels
             set
             {
                 SetProperty(ref _sources, value);
+                FilteredSources = value;
                 IsLoading = false;
             }
         }
@@ -34,6 +37,31 @@ namespace PrismNewsFeed.ViewModels
             {
                 SetProperty(ref _selectedSource, value);
                 NavigateToTopHeadlinesPageCommand.Execute();
+            }
+        }
+
+        private List<Source> _filteredSources;
+        public List<Source> FilteredSources
+        {
+            get => _filteredSources;
+            set => SetProperty(ref _filteredSources, value);
+        }
+
+        private string _sourcesSearchText = string.Empty;
+        public string SourcesSearchText
+        {
+            get => _sourcesSearchText;
+            set
+            {
+                SetProperty(ref _sourcesSearchText, value);
+                if (value.Any() && Sources != null)
+                {
+                    FilteredSources = Sources.Where(s => s.Name.ToLower().Contains(value.ToLower())).ToList();
+                }
+                else
+                {
+                    FilteredSources = Sources;
+                }
             }
         }
 

@@ -36,17 +36,22 @@ namespace PrismNewsFeed.ViewModels
             if (_receivedOnNavigatingParameters != null)
             {
                 await base.LoadData();
-                if (!_receivedOnNavigatingParameters.ContainsKey(NavigationKeys.headlinesSource))
-                {
-                    Headlines = await _newsService.LoadTopHeadlines();
-                }
-                else
+                if (_receivedOnNavigatingParameters.ContainsKey(NavigationKeys.headlinesSource))
                 {
                     var source = _receivedOnNavigatingParameters[NavigationKeys.headlinesSource] as Source;
                     Title = source.Name;
                     Headlines = await _newsService.LoadTopHeadlines(source.Id);
                 }
-                // else if contains query
+                else if (_receivedOnNavigatingParameters.ContainsKey(NavigationKeys.query))
+                {
+                    var query = (string)_receivedOnNavigatingParameters[NavigationKeys.query];
+                    Title = query;
+                    Headlines = await _newsService.SearchHeadlines(query);
+                }
+                else
+                {
+                    Headlines = await _newsService.LoadTopHeadlines();
+                }
             }
         }
     }

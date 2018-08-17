@@ -1,25 +1,17 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Navigation;
-using PrismNewsFeed.Services;
-using System;
-using System.Collections.Generic;
+﻿using Prism.Navigation;
 using System.Linq;
-using PrismNewsFeed.Models;
 using Xamarin.Forms;
 using System.Windows.Input;
+using PrismNewsFeed.Constants;
 using System.Threading.Tasks;
-using Plugin.Connectivity;
 
 namespace PrismNewsFeed.ViewModels
 {
-    public class SearchPageViewModel : HeadlinesViewModelBase
+    public class SearchPageViewModel : ViewModelBase
     {
-        public SearchPageViewModel(INavigationService navigationService, INewsService headlinesService) : base(navigationService, headlinesService)
+        public SearchPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Search";
-            IsLoading = false;
-            Headlines = new List<Headline>();
         }
 
         private ICommand _searchCommand;
@@ -31,34 +23,19 @@ namespace PrismNewsFeed.ViewModels
                 {
                     if (query.Any())
                     {
-                        lastQuery = query;
-                        if (CrossConnectivity.Current.IsConnected)
-                        {
-                            await LoadData();
-                        }
-                        else
-                        {
-                            ConnectionLost = true;
-                        }
+                        await NavigateToHeadlinesPage(query);
+                        // save query if not exists
+                        // update query last searched date if exists
                     }
                 }));
             }
         }
 
-        private string lastQuery;
-
-        private async Task SearchForHeadlines(string query)
+        private async Task NavigateToHeadlinesPage(string query)
         {
-            Headlines = await _newsService.SearchHeadlines(query);
-        }
-
-        public override async Task LoadData()
-        {
-            if (lastQuery != null)
-            {
-                await base.LoadData();
-                await SearchForHeadlines(lastQuery);
-            }
+            var parameters = new NavigationParameters();
+            parameters.Add(NavigationKeys.query, query);
+            await NavigationService.NavigateAsync("TopHeadlinesPage", parameters);
         }
     }
 }

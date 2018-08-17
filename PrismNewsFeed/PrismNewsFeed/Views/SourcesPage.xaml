@@ -4,8 +4,6 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:converters="clr-namespace:PrismNewsFeed.Converters"
              xmlns:controls="clr-namespace:PrismNewsFeed.Views.Controls"
-             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              prism:ViewModelLocator.AutowireViewModel="True"
              Title="{Binding Title}"
              x:Class="PrismNewsFeed.Views.SourcesPage">
@@ -14,7 +12,10 @@
                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
                FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 
-        <ListView ItemsSource="{Binding Sources}" IsVisible="{Binding IsLoading, Converter={converters:InverseBoolConverter}}"
+        <SearchBar x:Name="SearchBar" Placeholder="Search sources" HorizontalOptions="FillAndExpand" VerticalOptions="Fill"
+                   Text="{Binding SourcesSearchText}"/>
+
+        <ListView ItemsSource="{Binding FilteredSources}" IsVisible="{Binding IsLoading, Converter={converters:InverseBoolConverter}}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   CachingStrategy="RetainElement" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                   HasUnevenRows="True" SeparatorVisibility="None">
