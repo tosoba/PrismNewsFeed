@@ -1,6 +1,5 @@
 ﻿using Prism;
 using Prism.Ioc;
-using PrismNewsFeed.ViewModels;
 using PrismNewsFeed.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,6 +18,8 @@ namespace PrismNewsFeed
         protected override async void OnInitialized()
         {
             InitializeComponent();
+
+            Database.InitDb();
 
             await NavigationService.NavigateAsync("NavigationPage/FeedsPage");
         }

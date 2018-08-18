@@ -10,7 +10,7 @@
         <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Label Text="{Binding Name}" Margin="5,5,5,5" FontSize="Medium" FontAttributes="Bold" VerticalTextAlignment="Center"/>
             <Label Text="{Binding Description}" HorizontalOptions="Fill" Margin="5,5,5,5" FontSize="Default"/>
-            <BoxView Color="#2196F3" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="5" />
+            <BoxView Color="#2196F3" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="2" />
         </StackLayout>
   </ViewCell.View>
 </ViewCell>

@@ -11,8 +11,21 @@
     <StackLayout Orientation="Vertical">
         <SearchBar x:Name="SearchBar" Placeholder="Enter topic" HorizontalOptions="FillAndExpand" VerticalOptions="Fill"
                    SearchCommand="{Binding SearchCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"/>
-        
-        <!-- ListView with previous searches -->
+
+        <ListView ItemsSource="{Binding PreviousQueries}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  CachingStrategy="RecycleElement" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                  HasUnevenRows="True" SeparatorVisibility="None">
+            <ListView.Header>
+                <Label Text="Recent searches:" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" 
+                       Margin="5,5,5,5" FontSize="Medium" VerticalTextAlignment="Center" FontAttributes="Bold"/>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <controls:SavedQueryListCell Query="{Binding Query}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
-  
+
 </ContentPage>

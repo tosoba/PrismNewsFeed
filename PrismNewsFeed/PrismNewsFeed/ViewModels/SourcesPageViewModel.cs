@@ -7,8 +7,6 @@ using PrismNewsFeed.Constants;
 using System.Threading.Tasks;
 using Plugin.Connectivity;
 using System.Linq;
-using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace PrismNewsFeed.ViewModels
 {

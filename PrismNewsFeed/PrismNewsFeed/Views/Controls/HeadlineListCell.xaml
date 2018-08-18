@@ -35,7 +35,7 @@
                                        HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 <Label Text="{Binding Description}" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Fill" Margin="5,5,5,5" FontSize="Default"/>
 
-                <BoxView Color="#2196F3" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="5" Grid.Row="3" Grid.ColumnSpan="2"/>
+                <BoxView Color="#2196F3" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="2" Grid.Row="3" Grid.ColumnSpan="2"/>
             </Grid>
         </StackLayout>
     </ViewCell.View>
