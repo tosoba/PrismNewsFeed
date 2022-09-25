@@ -8,7 +8,6 @@ namespace PrismNewsFeed.Services
     {
         Task<List<Headline>> LoadTopHeadlines(string source = null);
         Task<List<Headline>> SearchHeadlines(string query);
-
         Task<List<Source>> LoadSources();
     }
 }

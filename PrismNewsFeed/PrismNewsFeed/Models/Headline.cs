@@ -26,6 +26,9 @@ namespace PrismNewsFeed.Models
         [JsonProperty("publishedAt")]
         public string PublishedAt { get; set; }
 
+        [JsonProperty("content")]
+        public string Content { get; set; }
+
         [JsonIgnore]
         public string PublishedFormatted {
             get => Regex.Replace(PublishedAt, "[A-Za-z ]", " ");

@@ -3,6 +3,8 @@ using Prism.Navigation;
 using PrismNewsFeed.Constants;
 using PrismNewsFeed.Models;
 using PrismNewsFeed.Services;
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace PrismNewsFeed.ViewModels
